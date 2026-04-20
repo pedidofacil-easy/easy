@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel - PedidoFácil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f6fa;
+        }
+        .header {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .btn-sair {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        .link-cardapio {
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .link-cardapio input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            margin-top: 12px;
+        }
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: #ecf0f1;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .tab-btn.active {
+            background: #e67e22;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+        }
+        .btn-salvar {
+            background: #e67e22;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-add {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .produtos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .produto-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .produto-preco {
+            color: #e67e22;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 8px 0;
+        }
+        .btn-editar {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .btn-excluir {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 500px;
+        }
+        .message {
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>🍽️ PedidoFácil - Painel</h2>
+        <button class="btn-sair" onclick="logout()">Sair</button>
+    </div>
+    
+    <div class="container">
+        <div class="link-cardapio">
+            <strong>🔗 Seu cardápio digital:</strong>
+            <input type="text" id="linkCardapio" readonly>
+            <button onclick="copiarLink()" style="margin-top:10px; padding:8px 16px; background:#27ae60; color:white; border:none; border-radius:8px;">📋 Copiar link</button>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="mostrarTab('produtos')">📦 Produtos</button>
+            <button class="tab-btn" onclick="mostrarTab('config')">⚙️ Configurações</button>
+            <button class="tab-btn" onclick="mostrarTab('pedidos')">📋 Pedidos</button>
+        </div>
+        
+        <div id="tabProdutos" class="tab-content active">
+            <button class="btn-add" onclick="abrirModalProduto()">+ Novo Produto</button>
+            <div id="produtosList" class="produtos-grid"></div>
+        </div>
+        
+        <div id="tabConfig" class="tab-content">
+            <div class="card">
+                <h3>📞 Configurações da loja</h3>
+                <div class="form-group">
+                    <label>WhatsApp para receber pedidos</label>
+                    <input type="tel" id="whatsappLoja">
+                </div>
+                <div class="form-group">
+                    <label>Endereço da loja</label>
+                    <input type="text" id="enderecoLoja">
+                </div>
+                <div class="form-group">
+                    <label>Horário de funcionamento</label>
+                    <input type="text" id="horario" placeholder="Ex: 18h às 23h">
+                </div>
+                <button class="btn-salvar" onclick="salvarConfig()">💾 Salvar</button>
+            </div>
+        </div>
+        
+        <div id="tabPedidos" class="tab-content">
+            <div class="card">
+                <h3>📋 Pedidos recebidos</h3>
+                <div id="pedidosList" style="text-align:center; padding:40px; color:#999;">Carregando...</div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modalProduto" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Novo Produto</h3>
+            <div class="form-group"><input type="text" id="produtoNome" placeholder="Nome do produto"></div>
+            <div class="form-group"><input type="number" id="produtoPreco" step="0.01" placeholder="Preço"></div>
+            <div class="form-group"><input type="text" id="produtoDescricao" placeholder="Descrição"></div>
+            <div class="form-group"><select id="produtoCategoria"><option>Principal</option><option>Bebidas</option><option>Sobremesas</option></select></div>
+            <button class="btn-salvar" onclick="salvarProduto()">Salvar</button>
+            <button onclick="fecharModal()" style="margin-top:10px; background:#ccc; border:none; padding:10px; border-radius:50px; width:100%;">Cancelar</button>
+        </div>
+    </div>
+    
+    <div id="message" class="message"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, where, deleteDoc, doc, updateDoc, getDoc, orderBy } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyA8qo7qFYXlqEriMBeyoyELwtiRPGxpVc4",
+            authDomain: "lanchepodpah.firebaseapp.com",
+            projectId: "lanchepodpah",
+            storageBucket: "lanchepodpah.firebasestorage.app",
+            messagingSenderId: "451860544292",
+            appId: "1:451860544292:web:4dbbe9c0c53e8cd0cf91b1"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        const restaurante = JSON.parse(localStorage.getItem('restauranteLogado'));
+        if (!restaurante) window.location.href = 'login.html';
+        
+        let editandoId = null;
+        
+        function mostrarMensagem(texto, tipo) {
+            const msg = document.getElementById('message');
+            msg.textContent = texto;
+            msg.style.backgroundColor = tipo === 'success' ? '#27ae60' : '#e74c3c';
+            msg.style.color = 'white';
+            msg.style.display = 'block';
+            setTimeout(() => msg.style.display = 'none', 3000);
+        }
+        
+        document.getElementById('linkCardapio').value = `${window.location.origin}${window.location.pathname.replace('painel.html', 'cardapio.html')}?rest=${restaurante.email}`;
+        window.copiarLink = () => { document.getElementById('linkCardapio').select(); document.execCommand('copy'); mostrarMensagem('Link copiado!', 'success'); };
+        
+        window.mostrarTab = (tab) => {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            if (tab === 'produtos') { document.getElementById('tabProdutos').classList.add('active'); document.querySelectorAll('.tab-btn')[0].classList.add('active'); carregarProdutos(); }
+            else if (tab === 'config') { document.getElementById('tabConfig').classList.add('active'); document.querySelectorAll('.tab-btn')[1].classList.add('active'); carregarConfig(); }
+            else if (tab === 'pedidos') { document.getElementById('tabPedidos').classList.add('active'); document.querySelectorAll('.tab-btn')[2].classList.add('active'); carregarPedidos(); }
+        };
+        
+        async function carregarProdutos() {
+            const q = query(collection(db, "produtos"), where("restauranteId", "==", restaurante.email));
+            const snapshot = await getDocs(q);
+            const container = document.getElementById('produtosList');
+            if (snapshot.empty) { container.innerHTML = '<p style="text-align:center; color:#999;">Nenhum produto</p>'; return; }
+            container.innerHTML = '';
+            snapshot.forEach(docProd => { const p = docProd.data();
+                container.innerHTML += `<div class="produto-card"><h4>${p.nome}</h4><div class="produto-preco">R$ ${p.preco.toFixed(2)}</div><button class="btn-editar" onclick="editarProduto('${docProd.id}','${p.nome}',${p.preco},'${p.descricao||''}','${p.categoria}')">✏️</button> <button class="btn-excluir" onclick="excluirProduto('${docProd.id}')">🗑️</button></div>`;
+            });
+        }
+        
+        window.editarProduto = (id, nome, preco, desc, cat) => { editandoId = id; document.getElementById('modalTitle').textContent = 'Editar'; document.getElementById('produtoNome').value = nome; document.getElementById('produtoPreco').value = preco; document.getElementById('produtoDescricao').value = desc; document.getElementById('produtoCategoria').value = cat; document.getElementById('modalProduto').style.display = 'flex'; };
+        window.excluirProduto = async (id) => { if(confirm('Excluir?')){ await deleteDoc(doc(db,"produtos",id)); carregarProdutos(); } };
+        window.salvarProduto = async () => {
+            const nome = document.getElementById('produtoNome').value, preco = parseFloat(document.getElementById('produtoPreco').value), desc = document.getElementById('produtoDescricao').value, cat = document.getElementById('produtoCategoria').value;
+            if(!nome||!preco) return;
+            if(editandoId) await updateDoc(doc(db,"produtos",editandoId),{nome,preco,descricao:desc,categoria:cat});
+            else await addDoc(collection(db,"produtos"),{nome,preco,descricao:desc,categoria:cat,restauranteId:restaurante.email,disponivel:true,createdAt:new Date().toISOString()});
+            fecharModal(); carregarProdutos(); mostrarMensagem('Produto salvo!','success');
+        };
+        
+        window.abrirModalProduto = () => { editandoId = null; document.getElementById('modalTitle').textContent = 'Novo Produto'; document.getElementById('produtoForm')?.reset(); document.getElementById('modalProduto').style.display = 'flex'; };
+        window.fecharModal = () => { document.getElementById('modalProduto').style.display = 'none'; };
+        
+        async function carregarConfig() { const docSnap = await getDoc(doc(db,"restaurantes",restaurante.email)); if(docSnap.exists()){ const d=docSnap.data(); document.getElementById('whatsappLoja').value=d.whatsapp||''; document.getElementById('enderecoLoja').value=d.endereco||''; document.getElementById('horario').value=d.horario||''; } }
+        window.salvarConfig = async () => { await updateDoc(doc(db,"restaurantes",restaurante.email),{whatsapp:document.getElementById('whatsappLoja').value,endereco:document.getElementById('enderecoLoja').value,horario:document.getElementById('horario').value}); mostrarMensagem('Configurações salvas!','success'); };
+        
+        async function carregarPedidos() { const q = query(collection(db,"pedidos"), where("restauranteId","==",restaurante.email), orderBy("createdAt","desc")); const snapshot = await getDocs(q); const container = document.getElementById('pedidosList'); if(snapshot.empty){ container.innerHTML='<p>Nenhum pedido</p>'; return; } container.innerHTML=''; snapshot.forEach(d=>{ const p=d.data(); container.innerHTML+=`<div style="background:#f8f9fa; border-radius:12px; padding:12px; margin-bottom:10px;"><strong>Pedido #${d.id.slice(-6)}</strong><br>Total: R$ ${(p.total||0).toFixed(2)}<br>Pagamento: ${p.formaPagamento||'-'}<br>Status: ${p.status||'novo'}</div>`; }); }
+        
+        window.logout = () => { localStorage.removeItem('restauranteLogado'); window.location.href='login.html'; };
+        
+        carregarProdutos();
+    </script>
+</body>
+</html>
