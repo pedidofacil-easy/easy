@@ -206,7 +206,7 @@
             margin-top: 16px;
         }
 
-        /* SEÇÃO PLANOS */
+        /* SEÇÃO PLANOS - TAMANHOS IGUAIS */
         .section-title {
             text-align: center;
             font-size: 32px;
@@ -230,6 +230,8 @@
             padding: 32px;
             width: 360px;
             transition: 0.2s;
+            display: flex;
+            flex-direction: column;
         }
 
         .plano-card:hover {
@@ -242,17 +244,6 @@
             background: #0f172a;
         }
 
-        .plano-badge {
-            display: inline-block;
-            background: #1e293b;
-            color: #3b82f6;
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-
         .plano-card h3 {
             font-size: 28px;
             margin-bottom: 8px;
@@ -263,6 +254,7 @@
             color: #888;
             font-size: 14px;
             margin-bottom: 20px;
+            min-height: 42px;
         }
 
         .preco-antigo {
@@ -287,6 +279,7 @@
         .plano-card ul {
             list-style: none;
             margin: 24px 0;
+            flex-grow: 1;
         }
 
         .plano-card li {
@@ -305,6 +298,7 @@
             font-weight: 600;
             color: white;
             transition: 0.2s;
+            margin-top: auto;
         }
 
         .btn-plano:hover {
@@ -325,11 +319,6 @@
             border-radius: 20px;
             padding: 28px;
             text-align: center;
-        }
-
-        .feature-icon {
-            font-size: 40px;
-            margin-bottom: 16px;
         }
 
         .feature-card h3 {
@@ -401,11 +390,6 @@
             border: 1px solid #1e1e1e;
             border-radius: 20px;
             padding: 28px;
-        }
-
-        .stars {
-            color: #3b82f6;
-            margin-bottom: 16px;
         }
 
         .depo-text {
@@ -504,7 +488,7 @@
 <nav class="navbar">
     <div class="container">
         <div class="logo">
-            🍽️ <span>PedidoFácil</span>
+            Pedido<span>Fácil</span>
         </div>
         <ul class="nav-links">
             <li><a href="#">Início</a></li>
@@ -520,7 +504,7 @@
 <section class="container">
     <div class="hero-section">
         <div class="hero-left">
-            <div class="offer-badge">🔥 Oferta relâmpago</div>
+            <div class="offer-badge">Oferta relâmpago</div>
             <h1>Adquira o <span>Plano Start</span> ou o <span>Plano Gestão Avançada</span> por até <span style="color:#3b82f6;">75% Off</span></h1>
             <p>Conte com cardápio digital, recuperador de vendas e todas as ferramentas que fazem do PedidoFácil o sistema mais completo do Brasil!</p>
             <div class="validity">*Válido por 2 meses e apenas por pagamento via cartão de crédito</div>
@@ -565,7 +549,7 @@
                         <option>Acima de R$40.000</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-submit">Testar grátis por 7 dias →</button>
+                <button type="submit" class="btn-submit">Testar grátis por 7 dias</button>
                 <div class="form-note">Sem compromisso. Não pedimos dados de cartão.</div>
             </form>
             <div id="message" style="margin-top:16px; display:none; padding:12px; border-radius:12px; text-align:center;"></div>
@@ -589,13 +573,13 @@
         <table>
             <thead><tr><th></th><th>Com PedidoFácil</th><th>Sem PedidoFácil</th></tr></thead>
             <tbody>
-                <tr><td>Atendimento de clientes</td><td class="check-yes">✅ Automatizado</td><td class="check-no">❌ Manual</td></tr>
-                <tr><td>Economia de tempo</td><td class="check-yes">✅ Até 60%</td><td class="check-no">❌ Nenhum</td></tr>
-                <tr><td>Ganho de faturamento</td><td class="check-yes">✅ Até 50%</td><td class="check-no">❌ Nenhum</td></tr>
-                <tr><td>Falhas humanas</td><td class="check-yes">✅ Inexistente</td><td class="check-no">❌ Frequente</td></tr>
-                <tr><td>Controle financeiro</td><td class="check-yes">✅ Sim</td><td class="check-no">❌ Não</td></tr>
-                <tr><td>Emissão de notas fiscais</td><td class="check-yes">✅ Sim</td><td class="check-no">❌ Não</td></tr>
-                <tr><td>Gestor de Pedidos e Relatório</td><td class="check-yes">✅ Sim</td><td class="check-no">❌ Não</td></tr>
+                <tr><td>Atendimento de clientes</td><td class="check-yes">Automatizado</td><td class="check-no">Manual</td></tr>
+                <tr><td>Economia de tempo</td><td class="check-yes">Até 60%</td><td class="check-no">Nenhum</td></tr>
+                <tr><td>Ganho de faturamento</td><td class="check-yes">Até 50%</td><td class="check-no">Nenhum</td></tr>
+                <tr><td>Falhas humanas</td><td class="check-yes">Inexistente</td><td class="check-no">Frequente</td></tr>
+                <tr><td>Controle financeiro</td><td class="check-yes">Sim</td><td class="check-no">Não</td></tr>
+                <tr><td>Emissão de notas fiscais</td><td class="check-yes">Sim</td><td class="check-no">Não</td></tr>
+                <tr><td>Gestor de Pedidos e Relatório</td><td class="check-yes">Sim</td><td class="check-no">Não</td></tr>
             </tbody>
         </table>
     </div>
@@ -605,12 +589,12 @@
 <div class="container">
     <h2 class="section-title">Funcionalidades</h2>
     <div class="features-grid">
-        <div class="feature-card"><div class="feature-icon">🤖</div><h3>Atendimento automatizado</h3><p>Atenda seus clientes automaticamente nos aplicativos que eles mais usam</p></div>
-        <div class="feature-card"><div class="feature-icon">📱</div><h3>Cardápio Digital</h3><p>Dê autonomia aos seus clientes para pedirem seus pratos favoritos</p></div>
-        <div class="feature-card"><div class="feature-icon">🔄</div><h3>Recuperador de vendas</h3><p>Recupere clientes com mensagens automáticas</p></div>
-        <div class="feature-card"><div class="feature-icon">💳</div><h3>Pagamento Online</h3><p>Receba por PIX ou Crédito direto no cardápio</p></div>
-        <div class="feature-card"><div class="feature-icon">👨‍🍳</div><h3>Aplicativo Garçom</h3><p>Comanda digital e QR Code para mesas</p></div>
-        <div class="feature-card"><div class="feature-icon">📊</div><h3>Gestão Completa</h3><p>Frente de caixa, controle de estoque e relatórios</p></div>
+        <div class="feature-card"><h3>Atendimento automatizado</h3><p>Atenda seus clientes automaticamente nos aplicativos que eles mais usam</p></div>
+        <div class="feature-card"><h3>Cardápio Digital</h3><p>Dê autonomia aos seus clientes para pedirem seus pratos favoritos</p></div>
+        <div class="feature-card"><h3>Recuperador de vendas</h3><p>Recupere clientes com mensagens automáticas</p></div>
+        <div class="feature-card"><h3>Pagamento Online</h3><p>Receba por PIX ou Crédito direto no cardápio</p></div>
+        <div class="feature-card"><h3>Aplicativo Garçom</h3><p>Comanda digital e QR Code para mesas</p></div>
+        <div class="feature-card"><h3>Gestão Completa</h3><p>Frente de caixa, controle de estoque e relatórios</p></div>
     </div>
 </div>
 
@@ -618,8 +602,8 @@
 <div class="container">
     <h2 class="section-title">O que nossos clientes dizem</h2>
     <div class="depoimentos-grid">
-        <div class="depo-card"><div class="stars">⭐⭐⭐⭐⭐</div><div class="depo-text">"Sem o PedidoFácil, a gente não conseguiria atender com 100% de eficácia."</div><div class="depo-author">Diogo Fülber - Pizzaria do Maestro</div></div>
-        <div class="depo-card"><div class="stars">⭐⭐⭐⭐⭐</div><div class="depo-text">"O PedidoFácil melhorou a gestão de dados e o atendimento do meu delivery"</div><div class="depo-author">Fernando Sampaio - Pizzaria Igarapé</div></div>
+        <div class="depo-card"><div class="depo-text">"Sem o PedidoFácil, a gente não conseguiria atender com 100% de eficácia."</div><div class="depo-author">Diogo Fülber - Pizzaria do Maestro</div></div>
+        <div class="depo-card"><div class="depo-text">"O PedidoFácil melhorou a gestão de dados e o atendimento do meu delivery"</div><div class="depo-author">Fernando Sampaio - Pizzaria Igarapé</div></div>
     </div>
 </div>
 
@@ -628,21 +612,34 @@
     <h2 class="section-title">Nossos planos</h2>
     <div class="planos-grid">
         <div class="plano-card">
-            <div class="plano-badge">Mais vendido</div>
             <h3>Start</h3>
-            <p>Para quem busca uma solução eficiente</p>
+            <p>Para quem busca uma solução eficiente para gestão de pedidos</p>
             <div class="preco-antigo">R$ 299,99</div>
             <div class="preco-novo">R$ 79,99<span>/mês</span></div>
-            <ul><li>✓ Robô com IA para WhatsApp</li><li>✓ Cardápio Digital</li><li>✓ Pedidos em Balcão (PDV)</li><li>✓ QR Code para mesas</li><li>✓ Aplicativo Garçom</li><li>✓ Pagamento Online</li><li>✓ Suporte todos os dias</li></ul>
+            <ul>
+                <li>Robô com IA para WhatsApp</li>
+                <li>Cardápio Digital</li>
+                <li>Pedidos em Balcão (PDV)</li>
+                <li>QR Code para mesas</li>
+                <li>Aplicativo Garçom</li>
+                <li>Pagamento Online</li>
+                <li>Suporte todos os dias</li>
+            </ul>
             <a href="contratar.html?plano=start" class="btn-plano">Começar teste grátis</a>
         </div>
         <div class="plano-card destaque">
-            <div class="plano-badge">Recomendado</div>
             <h3>Gestão Avançada</h3>
-            <p>Para quem precisa de gestão completa</p>
+            <p>Para quem precisa de uma gestão completa e integrada do estabelecimento</p>
             <div class="preco-antigo">R$ 399,99</div>
             <div class="preco-novo">R$ 129,99<span>/mês</span></div>
-            <ul><li>✓ Tudo do Plano Start</li><li>✓ Display para cozinha (KDS)</li><li>✓ Gestor de Estoque</li><li>✓ Automação financeira com IA</li><li>✓ Integração com plataformas</li><li>✓ Suporte prioritário 24/7</li></ul>
+            <ul>
+                <li>Tudo do Plano Start</li>
+                <li>Display para cozinha (KDS)</li>
+                <li>Gestor de Estoque</li>
+                <li>Automação financeira com IA</li>
+                <li>Integração com plataformas</li>
+                <li>Suporte prioritário 24/7</li>
+            </ul>
             <a href="contratar.html?plano=gestao" class="btn-plano">Começar teste grátis</a>
         </div>
     </div>
@@ -652,15 +649,15 @@
 <div class="container">
     <div class="cta-section">
         <h2>Transforme a experiência dos seus pedidos com a PedidoFácil</h2>
-        <a href="#" class="btn-cta">Testar grátis por 7 dias →</a>
+        <a href="#" class="btn-cta">Testar grátis por 7 dias</a>
     </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
     <div class="container">
-        <div class="footer-text">© 2025 PedidoFácil - Sistema completo para restaurantes</div>
-        <div class="footer-text" style="margin-top: 8px;">📞 Dúvidas? Chame no WhatsApp</div>
+        <div class="footer-text">2025 PedidoFácil - Sistema completo para restaurantes</div>
+        <div class="footer-text" style="margin-top: 8px;">Dúvidas? Chame no WhatsApp</div>
     </div>
 </footer>
 
@@ -687,14 +684,14 @@
         e.preventDefault();
         const btn = form.querySelector('.btn-submit');
         const original = btn.textContent;
-        btn.textContent = '⏳ Enviando...';
+        btn.textContent = 'Enviando...';
         btn.disabled = true;
         
         const pedidos = document.querySelector('input[name="pedidos"]:checked')?.value;
         const computador = document.querySelector('input[name="computador"]:checked')?.value;
         
         if (!pedidos || !computador) {
-            messageDiv.textContent = '⚠️ Preencha todas as opções';
+            messageDiv.textContent = 'Preencha todas as opções';
             messageDiv.style.background = '#e74c3c';
             messageDiv.style.display = 'block';
             btn.textContent = original;
@@ -717,13 +714,13 @@
         
         try {
             await addDoc(collection(db, "leads"), leadData);
-            messageDiv.textContent = '✅ Teste grátis solicitado! Entraremos em contato.';
+            messageDiv.textContent = 'Teste grátis solicitado! Entraremos em contato.';
             messageDiv.style.background = '#3b82f6';
             messageDiv.style.display = 'block';
             form.reset();
             setTimeout(() => messageDiv.style.display = 'none', 5000);
         } catch (error) {
-            messageDiv.textContent = '❌ Erro ao enviar. Tente novamente.';
+            messageDiv.textContent = 'Erro ao enviar. Tente novamente.';
             messageDiv.style.background = '#e74c3c';
             messageDiv.style.display = 'block';
         }
