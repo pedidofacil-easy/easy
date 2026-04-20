@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PedidoFácil - Sistema completo para restaurantes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            color: #1a1a2e;
+            background: #fff;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 16px 0;
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .logo-icon { font-size: 28px; }
+        .logo-text { color: #1a1a2e; }
+        .highlight { color: #e67e22; }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #1a1a2e;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: #e67e22; }
+        .btn-nav {
+            background: #e67e22;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .btn-nav:hover {
+            background: #d35400;
+            transform: translateY(-2px);
+        }
+        .hero {
+            background: linear-gradient(135deg, #fff5eb 0%, #ffe8d9 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+        .offer-badge {
+            display: inline-block;
+            background: #e67e22;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: 48px;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            line-height: 1.2;
+        }
+        .hero-description {
+            font-size: 18px;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto 16px;
+        }
+        .validity {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 32px;
+        }
+        .btn-primary {
+            background: #e67e22;
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background: #d35400;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(230,126,34,0.3);
+        }
+        .btn-large { font-size: 18px; padding: 16px 40px; }
+        .comparison-table {
+            background: white;
+            border-radius: 24px;
+            overflow-x: auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            margin: 40px 0;
+        }
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+        .comparison-table th {
+            background: #1a1a2e;
+            color: white;
+            padding: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+        .comparison-table td {
+            padding: 16px 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        .comparison-table td:first-child {
+            text-align: left;
+            font-weight: 600;
+            background: #f8f9fa;
+        }
+        .check-yes { color: #27ae60; font-size: 24px; font-weight: bold; }
+        .check-no { color: #e74c3c; font-size: 24px; }
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin: 50px 0 30px;
+        }
+        .stats-section {
+            background: #1a1a2e;
+            color: white;
+            padding: 60px 0;
+            margin: 40px 0;
+        }
+        .stats-grid {
+            display: flex;
+            justify-content: center;
+            gap: 64px;
+            flex-wrap: wrap;
+        }
+        .stat-card { text-align: center; }
+        .stat-number { font-size: 48px; font-weight: 800; color: #e67e22; }
+        .stat-label { font-size: 16px; opacity: 0.9; }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            border: 1px solid #eee;
+        }
+        .feature-card:hover { transform: translateY(-5px); }
+        .feature-icon { font-size: 48px; margin-bottom: 20px; }
+        .feature-card h3 { font-size: 22px; margin-bottom: 15px; color: #e67e22; }
+        .depoimentos {
+            background: #f8f9fa;
+            padding: 60px 0;
+            margin: 40px 0;
+        }
+        .depo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .depo-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .stars { color: #f1c40f; font-size: 20px; margin-bottom: 15px; }
+        .depo-text { font-size: 16px; font-style: italic; color: #555; margin-bottom: 15px; }
+        .depo-author { font-weight: 700; color: #e67e22; }
+        .planos-section {
+            padding: 60px 0;
+        }
+        .planos-grid {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+        .plano-card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            width: 380px;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            transition: transform 0.3s;
+        }
+        .plano-card:hover { transform: translateY(-8px); }
+        .plano-card.destaque { border: 2px solid #e67e22; }
+        .plano-badge {
+            position: absolute;
+            top: -12px;
+            left: 32px;
+            background: #e67e22;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .plano-badge.premium { background: #d35400; }
+        .plano-card h3 { font-size: 28px; margin: 16px 0 10px; }
+        .preco-antigo {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 16px;
+        }
+        .preco-novo {
+            font-size: 32px;
+            font-weight: 800;
+            color: #e67e22;
+            margin: 10px 0;
+        }
+        .preco-novo span { font-size: 14px; font-weight: normal; color: #666; }
+        .btn-plano {
+            display: block;
+            text-align: center;
+            background: #f0f0f0;
+            padding: 14px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            color: #1a1a2e;
+            transition: 0.2s;
+        }
+        .btn-plano-destaque {
+            background: #e67e22;
+            color: white;
+        }
+        .btn-plano:hover { background: #e67e22; color: white; }
+        .test-form {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+        }
+        .form-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.05);
+            border-radius: 32px;
+            padding: 48px;
+            backdrop-filter: blur(10px);
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .form-header h2 { font-size: 32px; margin-bottom: 8px; }
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        .form-group.full-width { flex: 100%; }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+        }
+        .form-group input::placeholder { color: rgba(255,255,255,0.6); }
+        .form-group option { color: #1a1a2e; }
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+        .form-note {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 13px;
+            opacity: 0.7;
+        }
+        .compatibility-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+        .transform-section {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 30px;
+            margin: 50px auto;
+            max-width: 900px;
+        }
+        .btn-cta {
+            background: white;
+            color: #e67e22;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 700;
+            display: inline-block;
+            transition: 0.2s;
+        }
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .footer-logo { font-size: 24px; font-weight: 700; }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .nav-links, .btn-nav { display: none; }
+            .form-wrapper { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container">
+        <div class="logo">
+            <span class="logo-icon">🍽️</span>
+            <span class="logo-text">Pedido<span class="highlight">Fácil</span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Início</a></li>
+            <li><a href="#planos">Planos</a></li>
+            <li><a href="#funcionalidades">Funcionalidades</a></li>
+        </ul>
+        <a href="contratar.html" class="btn-nav">Teste grátis</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="container">
+        <div class="offer-badge">🔥 Oferta relâmpago</div>
+        <h1>Nossa automação cuida de <span class="highlight">tudo no seu restaurante</span></h1>
+        <p class="hero-description">Chega de perder pedidos na correria! Atendimento automatizado, cardápio digital e muito mais.</p>
+        <div class="validity">*Planos com até 75% OFF nos 2 primeiros meses</div>
+        <a href="contratar.html" class="btn-primary btn-large">Testar grátis 7 dias →</a>
+    </div>
+</section>
+
+<section class="container">
+    <h2 class="section-title">Com PedidoFácil vs Sem PedidoFácil</h2>
+    <div class="comparison-table">
+        <table>
+            <thead>
+                <tr><th></th><th>Com PedidoFácil</th><th>Sem PedidoFácil</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Atendimento de clientes</td><td class="check-yes">✅ Automatizado</td><td class="check-no">❌ Manual</td></tr>
+                <tr><td>Economia de tempo</td><td class="check-yes">✅ Até 60%</td><td class="check-no">❌ Nenhum</td></tr>
+                <tr><td>Ganho de faturamento</td><td class="check-yes">✅ Até 50%</td><td class="check-no">❌ Nenhum</td></tr>
+                <tr><td>Falhas humanas</td><td class="check-yes">✅ Inexistente</td><td class="check-no">❌ Frequente</td></tr>
+                <tr><td>Controle financeiro</td><td class="check-yes">✅</td><td class="check-no">❌</td></tr>
+                <tr><td>Emissão de notas fiscais</td><td class="check-yes">✅</td><td class="check-no">❌</td></tr>
+                <tr><td>Gestor de Pedidos</td><td class="check-yes">✅</td><td class="check-no">❌</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="stats-section">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-number">+50mil</div><div class="stat-label">restaurantes</div></div>
+            <div class="stat-card"><div class="stat-number">60%</div><div class="stat-label">economia de tempo</div></div>
+            <div class="stat-card"><div class="stat-number">50%</div><div class="stat-label">aumento faturamento</div></div>
+        </div>
+    </div>
+</section>
+
+<section id="funcionalidades" class="container">
+    <h2 class="section-title">Principais funcionalidades</h2>
+    <div class="features-grid">
+        <div class="feature-card"><div class="feature-icon">🍔</div><h3>Para o restaurante</h3><p>Atendimento automatizado, Cardápio digital, Pagamento online</p></div>
+        <div class="feature-card"><div class="feature-icon">🏠</div><h3>Para o Salão</h3><p>App Garçom, PDV, QR Code para mesas, Comandas</p></div>
+        <div class="feature-card"><div class="feature-icon">📊</div><h3>Para Gestão</h3><p>Notas fiscais, Frente de caixa, Controle de estoque</p></div>
+    </div>
+</section>
+
+<section class="depoimentos">
+    <div class="container">
+        <h2 class="section-title">O que nossos clientes dizem</h2>
+        <div class="depo-grid">
+            <div class="depo-card"><div class="stars">⭐⭐⭐⭐⭐</div><p class="depo-text">"Sem o PedidoFácil, não conseguiríamos atender com 100% de eficácia."</p><div class="depo-author">Diogo Fülber - Pizzaria do Maestro</div></div>
+            <div class="depo-card"><div class="stars">⭐⭐⭐⭐⭐</div><p class="depo-text">"Melhorou a gestão e o atendimento do meu delivery."</p><div class="depo-author">Fernando Sampaio - Pizzaria Igarapé</div></div>
+        </div>
+    </div>
+</section>
+
+<section id="planos" class="planos-section">
+    <div class="container">
+        <h2 class="section-title">Nossos planos</h2>
+        <div class="planos-grid">
+            <div class="plano-card">
+                <div class="plano-badge">Mais vendido</div>
+                <h3>Start</h3>
+                <div class="preco-antigo">R$ 299,99</div>
+                <div class="preco-novo">R$ 79,99<span>/mês</span></div>
+                <ul><li>✓ Robô IA WhatsApp</li><li>✓ Cardápio Digital</li><li>✓ QR Code mesas</li><li>✓ App Garçom</li></ul>
+                <a href="contratar.html?plano=start" class="btn-plano">Contratar</a>
+            </div>
+            <div class="plano-card destaque">
+                <div class="plano-badge premium">Recomendado</div>
+                <h3>Gestão Avançada</h3>
+                <div class="preco-antigo">R$ 399,99</div>
+                <div class="preco-novo">R$ 129,99<span>/mês</span></div>
+                <ul><li>✓ Tudo do Start</li><li>✓ Display cozinha (KDS)</li><li>✓ Gestor de Estoque</li><li>✓ Automação financeira</li></ul>
+                <a href="contratar.html?plano=gestao" class="btn-plano btn-plano-destaque">Contratar</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="test-form">
+    <div class="container">
+        <div class="form-wrapper">
+            <div class="form-header"><h2>Teste a PedidoFácil <span class="highlight">sem pagar nada</span></h2><p>Preencha e ganhe 7 dias de acesso</p></div>
+            <form id="leadForm">
+                <div class="form-row"><div class="form-group"><input type="text" id="nome" placeholder="Seu nome" required></div><div class="form-group"><input type="email" id="email" placeholder="Seu email" required></div></div>
+                <div class="form-row"><div class="form-group"><input type="tel" id="whatsapp" placeholder="WhatsApp" required></div><div class="form-group"><input type="text" id="restaurante" placeholder="Nome do restaurante" required></div></div>
+                <div class="compatibility-badge">⚠️ Verifique se seu dispositivo é compatível</div>
+                <button type="submit" class="btn-submit">Testar grátis 7 dias →</button>
+            </form>
+            <div id="message" style="display:none; margin-top:20px; padding:15px; border-radius:12px;"></div>
+        </div>
+    </div>
+</section>
+
+<section class="transform-section">
+    <div class="container"><h2>Pronto para aumentar suas vendas?</h2><a href="contratar.html" class="btn-cta">Testar grátis →</a></div>
+</section>
+
+<footer>
+    <div class="container"><div class="footer-content"><div class="footer-logo">🍽️ Pedido<span class="highlight">Fácil</span></div></div><div class="footer-bottom"><p>© 2025 PedidoFácil - Sistema completo para restaurantes</p></div></div>
+</footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyA8qo7qFYXlqEriMBeyoyELwtiRPGxpVc4",
+        authDomain: "lanchepodpah.firebaseapp.com",
+        projectId: "lanchepodpah",
+        storageBucket: "lanchepodpah.firebasestorage.app",
+        messagingSenderId: "451860544292",
+        appId: "1:451860544292:web:4dbbe9c0c53e8cd0cf91b1"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    
+    document.getElementById('leadForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = e.target.querySelector('.btn-submit');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = '⏳ Enviando...';
+        submitBtn.disabled = true;
+        
+        const leadData = {
+            nome: document.getElementById('nome').value,
+            email: document.getElementById('email').value,
+            whatsapp: document.getElementById('whatsapp').value,
+            restaurante: document.getElementById('restaurante').value,
+            createdAt: new Date().toISOString(),
+            status: 'novo'
+        };
+        
+        try {
+            await addDoc(collection(db, "leads"), leadData);
+            const msg = document.getElementById('message');
+            msg.textContent = '✅ Teste grátis solicitado! Entraremos em contato.';
+            msg.style.background = '#27ae60';
+            msg.style.display = 'block';
+            e.target.reset();
+            setTimeout(() => msg.style.display = 'none', 5000);
+        } catch (error) {
+            const msg = document.getElementById('message');
+            msg.textContent = '❌ Erro ao enviar. Tente novamente.';
+            msg.style.background = '#e74c3c';
+            msg.style.display = 'block';
+        }
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    });
+    
+    document.getElementById('whatsapp').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length <= 11) {
+            if (value.length <= 2) e.target.value = `(${value}`;
+            else if (value.length <= 6) e.target.value = `(${value.slice(0,2)}) ${value.slice(2)}`;
+            else if (value.length <= 10) e.target.value = `(${value.slice(0,2)}) ${value.slice(2,6)}-${value.slice(6)}`;
+            else e.target.value = `(${value.slice(0,2)}) ${value.slice(2,7)}-${value.slice(7,11)}`;
+        }
+    });
+</script>
+
+</body>
+</html>
